@@ -29,6 +29,7 @@ export const register = async (req, res) => {
 		myError(err, res)
 	}
 }
+
 export const login = async (req, res) => {
 	try {
 
