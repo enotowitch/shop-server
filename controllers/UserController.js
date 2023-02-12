@@ -68,3 +68,101 @@ export const auth = async (req, res) => {
 		myError(err, res)
 	}
 }
+
+export const liked = async (req, res) => {
+
+	const userId = req.userId
+	const prodId = req.body._id
+
+	try {
+		const user = await UserModel.findById(userId)
+
+		// ! like
+		if (!user.liked.includes(prodId)) {
+			await UserModel.findOneAndUpdate(
+				{
+					_id: userId
+				},
+				{
+					"$push": { "liked": prodId }
+				},
+				(err) => {
+					err && myError(err, res)
+
+					res.json({
+						success: true,
+						msg: "liked"
+					})
+				}
+			)
+		} else {
+			// ! dislike
+			await UserModel.findOneAndUpdate(
+				{
+					_id: userId
+				},
+				{
+					"$pull": { "liked": prodId }
+				},
+				(err) => {
+					err && myError(err, res)
+
+					res.json({
+						success: true,
+						msg: "disliked"
+					})
+				}
+			)
+		}
+
+	} catch (err) { console.log(err) }
+}
+
+export const carted = async (req, res) => {
+
+	const userId = req.userId
+	const prodId = req.body._id
+
+	try {
+		const user = await UserModel.findById(userId)
+
+		// ! cart
+		if (!user.carted.includes(prodId)) {
+			await UserModel.findOneAndUpdate(
+				{
+					_id: userId
+				},
+				{
+					"$push": { "carted": prodId }
+				},
+				(err) => {
+					err && myError(err, res)
+
+					res.json({
+						success: true,
+						msg: "carted"
+					})
+				}
+			)
+		} else {
+			// ! discart
+			await UserModel.findOneAndUpdate(
+				{
+					_id: userId
+				},
+				{
+					"$pull": { "carted": prodId }
+				},
+				(err) => {
+					err && myError(err, res)
+
+					res.json({
+						success: true,
+						msg: "discarted"
+					})
+				}
+			)
+		}
+
+	} catch (err) { console.log(err) }
+}

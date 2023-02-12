@@ -1,6 +1,6 @@
 import ProdModel from "../models/Prod.js"
 
-export const add = async (req, res) => {
+export const addProd = async (req, res) => {
 	const doc = await new ProdModel({
 		...req.body
 	})
@@ -10,9 +10,16 @@ export const add = async (req, res) => {
 	res.json(prod)
 }
 
-export const get = async (req, res) => {
+export const getAllProd = async (req, res) => {
 	const prods = await ProdModel.find()
 	// todo
 	console.log(prods)
 	res.json(prods)
+}
+
+export const getOneProd = async (req, res) => {
+	const { id } = req.params
+	// todo
+	const prod = await ProdModel.findById(id)
+	res.json(prod)
 }

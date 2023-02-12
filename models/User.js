@@ -10,6 +10,14 @@ const userSchema = new mongoose.Schema(
 		password: {
 			type: String,
 			required: true
+		},
+		liked: {
+			type: Array,
+			default: []
+		},
+		carted: {
+			type: Array,
+			default: []
 		}
 	},
 	{
