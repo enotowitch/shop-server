@@ -9,7 +9,7 @@ const prodSchema = new mongoose.Schema(
 		},
 		// categories
 		cats: {
-			type: Array,
+			type: String,
 			required: true
 		},
 		text: {
