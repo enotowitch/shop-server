@@ -2,6 +2,7 @@ import express from "express"
 import config from "config"
 import mongoose from "mongoose"
 import cors from "cors"
+import multer from "multer"
 
 import * as UserController from "./controllers/UserController.js"
 import * as ProdController from "./controllers/ProdController.js"
@@ -17,6 +18,28 @@ app.use(cors())
 
 const PORT = config.get("port")
 app.listen(PORT, (err) => err ? console.log("SERVER ERR", err) : console.log(`SERVER OK, PORT: ${PORT}`))
+
+// ! multer
+const storage = multer.diskStorage({
+	"destination": (req, file, cb) => {
+		cb(null, "upload")
+	},
+	"filename": (req, file, cb) => {
+		cb(null, file.originalname)
+	}
+})
+
+const upload = multer({ storage })
+
+app.post("/upload", upload.single("image"), (req, res) => {
+	res.json({
+		url: `${config.get("baseUrl")}upload/${req.file.originalname}`
+	}
+	)
+})
+
+app.use("/upload", express.static("upload"))
+// ? multer
 
 // !! routes
 // ! user
