@@ -122,12 +122,10 @@ export const carted = async (req, res) => {
 
 	const userId = req.userId
 	const prodId = req.body._id
+	const type = req.body.type // (def)one / many
 
-	try {
-		const user = await UserModel.findById(userId)
-
-		// ! cart
-		if (!user.carted.includes(prodId)) {
+	async function push() {
+		try {
 			await UserModel.findOneAndUpdate(
 				{
 					_id: userId
@@ -144,25 +142,61 @@ export const carted = async (req, res) => {
 					})
 				}
 			)
-		} else {
-			// ! discart
-			await UserModel.findOneAndUpdate(
-				{
-					_id: userId
-				},
-				{
-					"$pull": { "carted": prodId }
-				},
-				(err) => {
-					err && myError(err, res)
+		} catch (err) { console.log(err) }
+	}
 
-					res.json({
-						success: true,
-						msg: "discarted"
-					})
-				}
-			)
-		}
+	// !! carted type...
+	// ! ...ONE
+	if (type === "one") {
+		try {
+			const user = await UserModel.findById(userId)
 
-	} catch (err) { console.log(err) }
+			// ! (0 => 1) "carted"
+			if (!user.carted.includes(prodId)) {
+
+				push()
+
+			} else {
+				// ! (3 => 0) "discarted"
+				await UserModel.findOneAndUpdate(
+					{
+						_id: userId
+					},
+					{
+						"$pull": { "carted": prodId }
+					},
+					(err) => {
+						err && myError(err, res)
+
+						res.json({
+							success: true,
+							msg: "discarted"
+						})
+					}
+				)
+			}
+
+		} catch (err) { console.log(err) }
+	}
+	// ? ...ONE
+	// ! ...MANY
+	if (type === "many+") {
+
+		push()
+
+	}
+	// TODO
+	if (type === "many-") {
+		const find = await UserModel.find({ _id: userId })
+		const userCarted = find[0].carted
+		const withoutOne = userCarted.splice(userCarted.indexOf(prodId), 1)
+
+		await UserModel.findOneAndUpdate(
+			{ _id: userId },
+			{ $set: { "carted": userCarted } })
+
+		// todo - work not 100% too: https://stackoverflow.com/questions/32018889/how-to-pull-one-instance-of-an-item-in-an-array-in-mongodb
+	}
+	// ? ...MANY
+	// ?? carted type ...
 }

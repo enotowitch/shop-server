@@ -7,6 +7,10 @@ const prodSchema = new mongoose.Schema(
 			// required: true, // todo
 			unique: true
 		},
+		weight: {
+			type: String,
+			// required: true, // todo
+		},
 		// categories
 		cats: {
 			type: String,
@@ -21,7 +25,7 @@ const prodSchema = new mongoose.Schema(
 			// required: true // todo
 		},
 		price: {
-			type: String,
+			type: Number,
 			// required: true // todo
 		}
 	},

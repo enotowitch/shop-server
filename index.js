@@ -52,6 +52,6 @@ app.patch("/user/carted", auth, UserController.carted)
 // ! prod
 app.post("/prod", ProdController.addProd)
 app.get("/prod", ProdController.getAllProd)
-app.post("/prod/:id", ProdController.getOneProd)
+app.get("/prod/:id", ProdController.getOneProd)
 // ! search
 app.get("/search/:query", ProdController.search)
