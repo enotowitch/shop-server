@@ -53,5 +53,7 @@ app.patch("/user/carted", auth, UserController.carted)
 app.post("/prod", ProdController.addProd)
 app.get("/prod", ProdController.getAllProd)
 app.get("/prod/:id", ProdController.getOneProd)
+app.delete("/prod/:id", ProdController.delProd)
+app.patch("/prod/:id", ProdController.updProd)
 // ! search
 app.get("/search/:query", ProdController.search)

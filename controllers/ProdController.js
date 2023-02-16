@@ -35,3 +35,33 @@ export const search = async (req, res) => {
 	console.log(prods)
 	res.json(prods)
 }
+
+export const delProd = async (req, res) => {
+
+	const { id } = req.params
+
+	try {
+		const prod = await ProdModel.findOneAndDelete({ _id: id })
+
+		// todo
+
+		console.log(prod)
+		res.json(prod)
+
+	} catch (err) { console.log(err) }
+}
+
+export const updProd = async (req, res) => {
+
+	const { id } = req.params
+
+	try {
+		const prod = await ProdModel.findOneAndUpdate({ _id: id }, { ...req.body })
+
+		// todo
+
+		console.log(prod)
+		res.json(prod)
+
+	} catch (err) { console.log(err) }
+}

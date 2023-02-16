@@ -191,11 +191,14 @@ export const carted = async (req, res) => {
 		const userCarted = find[0].carted
 		const withoutOne = userCarted.splice(userCarted.indexOf(prodId), 1)
 
-		await UserModel.findOneAndUpdate(
+		const done = await UserModel.findOneAndUpdate(
 			{ _id: userId },
 			{ $set: { "carted": userCarted } })
 
-		// todo - work not 100% too: https://stackoverflow.com/questions/32018889/how-to-pull-one-instance-of-an-item-in-an-array-in-mongodb
+		console.log(done)
+		res.json({
+			success: true
+		})
 	}
 	// ? ...MANY
 	// ?? carted type ...
