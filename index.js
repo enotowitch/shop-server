@@ -49,11 +49,13 @@ app.post("/auth/:token", UserController.auth)
 
 app.patch("/user/liked", auth, UserController.liked)
 app.patch("/user/carted", auth, UserController.carted)
+app.patch("/user/viewed", auth, UserController.viewed)
 // ! prod
 app.post("/prod", ProdController.addProd)
 app.get("/prod", ProdController.getAllProd)
 app.get("/prod/:id", ProdController.getOneProd)
 app.delete("/prod/:id", ProdController.delProd)
 app.patch("/prod/:id", ProdController.updProd)
+app.get("/recently", ProdController.recently)
 // ! search
 app.get("/search/:query", ProdController.search)

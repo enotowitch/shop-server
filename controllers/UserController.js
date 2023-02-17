@@ -203,3 +203,20 @@ export const carted = async (req, res) => {
 	// ? ...MANY
 	// ?? carted type ...
 }
+
+export const viewed = async (req, res) => {
+
+	const { _id } = req.body
+	const { userId } = req
+
+	try {
+		await UserModel.findOneAndUpdate({ _id: userId }, { $pull: { viewed: _id } }) // pull all dup prods
+		const prods = await UserModel.findOneAndUpdate({ _id: userId }, { $push: { viewed: _id } }) // push prod to the end
+
+		// todo
+
+		console.log(prods)
+		res.json(prods)
+
+	} catch (err) { console.log(err) }
+}

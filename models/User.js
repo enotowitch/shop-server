@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
 		carted: {
 			type: Array,
 			default: []
+		},
+		viewed: {
+			type: Array,
+			default: []
 		}
 	},
 	{
