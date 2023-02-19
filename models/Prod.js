@@ -8,7 +8,7 @@ const prodSchema = new mongoose.Schema(
 			unique: true
 		},
 		weight: {
-			type: String,
+			type: Number,
 			// required: true, // todo
 		},
 		// categories
