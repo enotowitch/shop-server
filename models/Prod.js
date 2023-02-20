@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 
 const prodSchema = new mongoose.Schema(
 	{
+		// ! MAIN
 		title: {
 			type: String,
 			// required: true, // todo
@@ -27,7 +28,22 @@ const prodSchema = new mongoose.Schema(
 		price: {
 			type: Number,
 			// required: true // todo
-		}
+		},
+		// ? MAIN
+		// ! SECONDARY
+		compound: String,
+		calories: String,
+		proteins: Number,
+		fats: Number,
+		carbohydrates: Number,
+		expiration: String,
+		temperature: String,
+		// ? SECONDARY
+		// ! OTHER
+		delivery: String,
+		payment: String,
+		warranty: String
+		// ? OTHER
 	},
 	{
 		timestamps: true
