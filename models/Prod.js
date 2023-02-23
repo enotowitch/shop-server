@@ -32,11 +32,11 @@ const prodSchema = new mongoose.Schema(
 		// ? MAIN
 		// ! SECONDARY
 		compound: String,
-		calories: String,
+		calories: Number,
 		proteins: Number,
 		fats: Number,
 		carbohydrates: Number,
-		expiration: String,
+		expiration: Number,
 		temperature: String,
 		// ? SECONDARY
 		// ! OTHER

@@ -59,3 +59,5 @@ app.patch("/prod/:id", ProdController.updProd)
 app.get("/recently", ProdController.recently)
 // ! search
 app.get("/search/:query", ProdController.search)
+// ! filter
+app.get("/filter/:query", ProdController.filter)

@@ -28,7 +28,18 @@ export const search = async (req, res) => {
 	const searchValue = req.params.query.match(/(?:searchValue=)(.*?)(?:&)/)[1].trim()
 	const field = req.params.query.match(/(?:field=)(.*?)(?:&)/)[1].trim()
 
-	const prods = await ProdModel.find({ [field]: { $regex: searchValue, $options: 'i' } })
+	let prods
+	const regExp = { $regex: searchValue, $options: 'i' }
+
+	if (field === "text") {
+
+		prods = await ProdModel.find(
+			{ $or: [{ title: regExp }, { text: regExp }, { compound: regExp }] }
+		)
+
+	} else {
+		prods = await ProdModel.find({ [field]: regExp })
+	}
 
 	// todo
 
@@ -72,6 +83,21 @@ export const recently = async (req, res) => {
 		const prods = await ProdModel.find().sort({ createdAt: "desc" }) // todo LIMIT
 
 		// todo
+
+		console.log(prods)
+		res.json(prods)
+
+	} catch (err) { console.log(err) }
+}
+
+export const filter = async (req, res) => {
+
+	const { query } = req.params
+	const row = query.match(/(.+)(?:&)/)[1] // e.g "price"
+	const type = query.match(/(?:&)(.+)/)[1] // e.g "asc"
+
+	try {
+		const prods = await ProdModel.find().sort({ [row]: type })
 
 		console.log(prods)
 		res.json(prods)
