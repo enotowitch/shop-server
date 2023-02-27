@@ -13,7 +13,7 @@ const prodSchema = new mongoose.Schema(
 			// required: true, // todo
 		},
 		// categories
-		cats: {
+		categories: {
 			type: String,
 			// required: true // todo
 		},
@@ -31,7 +31,7 @@ const prodSchema = new mongoose.Schema(
 		},
 		// ? MAIN
 		// ! SECONDARY
-		compound: String,
+		composition: String,
 		calories: Number,
 		proteins: Number,
 		fats: Number,

@@ -34,7 +34,7 @@ export const search = async (req, res) => {
 	if (field === "text") {
 
 		prods = await ProdModel.find(
-			{ $or: [{ title: regExp }, { text: regExp }, { compound: regExp }] }
+			{ $or: [{ title: regExp }, { text: regExp }, { composition: regExp }] }
 		)
 
 	} else {
