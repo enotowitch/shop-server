@@ -3,6 +3,7 @@ import config from "config"
 import mongoose from "mongoose"
 import cors from "cors"
 import multer from "multer"
+import fs, { existsSync } from "fs"
 
 import * as UserController from "./controllers/UserController.js"
 import * as ProdController from "./controllers/ProdController.js"
@@ -22,6 +23,9 @@ app.listen(PORT, (err) => err ? console.log("SERVER ERR", err) : console.log(`SE
 // ! multer
 const storage = multer.diskStorage({
 	"destination": (req, file, cb) => {
+		if (!existsSync("upload")) {
+			fs.mkdirSync("upload")
+		}
 		cb(null, "upload")
 	},
 	"filename": (req, file, cb) => {
