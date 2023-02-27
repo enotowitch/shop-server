@@ -21,7 +21,7 @@ export const register = async (req, res) => {
 
 		const user = await doc.save()
 		const { password, ...userData } = user._doc // * trim password
-		const token = jwt.sign({ _id: user._id }, config.get("jwtKey"))
+		const token = jwt.sign({ _id: user._id }, process.env.JWT)
 
 		res.json({ ...userData, token })
 
@@ -45,7 +45,7 @@ export const login = async (req, res) => {
 		}
 
 		const { password, ...userData } = user._doc // * trim password
-		const token = jwt.sign({ _id: user._id }, config.get("jwtKey"))
+		const token = jwt.sign({ _id: user._id }, process.env.JWT)
 
 		res.json({ ...userData, token })
 
@@ -57,7 +57,7 @@ export const login = async (req, res) => {
 export const auth = async (req, res) => {
 	try {
 		const { token } = req.params
-		const decoded = jwt.verify(token, config.get("jwtKey"))
+		const decoded = jwt.verify(token, process.env.JWT)
 
 		const user = await UserModel.findById(decoded._id)
 		const { password, ...userData } = user._doc // * trim password
