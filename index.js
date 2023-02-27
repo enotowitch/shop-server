@@ -8,7 +8,7 @@ import * as UserController from "./controllers/UserController.js"
 import * as ProdController from "./controllers/ProdController.js"
 import { auth } from "./middleware/auth.js"
 
-mongoose.connect("mongodb+srv://enotowitch:qwerty123@cluster0.9tnodta.mongodb.net/dbNameHere?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGODB_URI)
 	.then(console.log("DB OK")).catch(err => console.log("DB ERR", err))
 
 // ! use
@@ -16,7 +16,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const PORT = config.get("port")
+const PORT = process.env.PORT || 5000
 app.listen(PORT, (err) => err ? console.log("SERVER ERR", err) : console.log(`SERVER OK, PORT: ${PORT}`))
 
 // ! multer
