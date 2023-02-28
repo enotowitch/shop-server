@@ -1,4 +1,6 @@
 import ProdModel from "../models/Prod.js"
+import config from "config"
+import fs from "fs"
 
 export const addProd = async (req, res) => {
 	const doc = await new ProdModel({
@@ -53,6 +55,9 @@ export const delProd = async (req, res) => {
 
 	try {
 		const prod = await ProdModel.findOneAndDelete({ _id: id })
+		// !! not tested
+		const img = prod?.imgUrl?.replace(config.get("baseUrl"), "")
+		fs.unlinkSync(img)
 
 		// todo
 
@@ -84,7 +89,7 @@ export const recently = async (req, res) => {
 
 		// todo
 
-		console.log(prods)
+		// console.log(prods)
 		res.json(prods)
 
 	} catch (err) { console.log(err) }
@@ -99,7 +104,7 @@ export const filter = async (req, res) => {
 	try {
 		const prods = await ProdModel.find().sort({ [row]: type })
 
-		console.log(prods)
+		// console.log(prods)
 		res.json(prods)
 
 	} catch (err) { console.log(err) }

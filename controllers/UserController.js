@@ -197,7 +197,7 @@ export const carted = async (req, res) => {
 			{ _id: userId },
 			{ $set: { "carted": userCarted } })
 
-		console.log(done)
+		// console.log(done)
 		res.json({
 			success: true
 		})
@@ -217,7 +217,7 @@ export const viewed = async (req, res) => {
 
 		// todo
 
-		console.log(prods)
+		// console.log(prods)
 		res.json(prods)
 
 	} catch (err) { console.log(err) }
