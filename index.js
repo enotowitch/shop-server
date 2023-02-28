@@ -9,7 +9,7 @@ import * as UserController from "./controllers/UserController.js"
 import * as ProdController from "./controllers/ProdController.js"
 import { auth } from "./middleware/auth.js"
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI || `mongodb+srv://enotowitch:qwerty123@cluster0.9tnodta.mongodb.net/dbNameHere?retryWrites=true&w=majority`)
 	.then(console.log("DB OK")).catch(err => console.log("DB ERR", err))
 
 // ! use

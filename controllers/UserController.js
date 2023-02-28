@@ -3,6 +3,8 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import config from "config"
 
+const JWT = process.env.JWT || config.get("jwtKey")
+
 function myError(err, res) {
 	console.log(err)
 	return res.status(501).json(err) // todo delete err to front on production
@@ -21,7 +23,7 @@ export const register = async (req, res) => {
 
 		const user = await doc.save()
 		const { password, ...userData } = user._doc // * trim password
-		const token = jwt.sign({ _id: user._id }, process.env.JWT)
+		const token = jwt.sign({ _id: user._id }, JWT)
 
 		res.json({ ...userData, token })
 
@@ -45,7 +47,7 @@ export const login = async (req, res) => {
 		}
 
 		const { password, ...userData } = user._doc // * trim password
-		const token = jwt.sign({ _id: user._id }, process.env.JWT)
+		const token = jwt.sign({ _id: user._id }, JWT)
 
 		res.json({ ...userData, token })
 
@@ -57,7 +59,7 @@ export const login = async (req, res) => {
 export const auth = async (req, res) => {
 	try {
 		const { token } = req.params
-		const decoded = jwt.verify(token, process.env.JWT)
+		const decoded = jwt.verify(token, JWT)
 
 		const user = await UserModel.findById(decoded._id)
 		const { password, ...userData } = user._doc // * trim password
