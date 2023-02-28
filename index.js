@@ -37,7 +37,7 @@ const upload = multer({ storage })
 
 app.post("/upload", upload.single("image"), (req, res) => {
 	res.json({
-		url: `${process.env.PORT || config.get("baseUrl")}upload/${req.file.originalname}`
+		url: `${config.get("baseUrl")}upload/${req.file.originalname}`
 	}
 	)
 })
