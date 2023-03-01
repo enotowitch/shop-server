@@ -222,3 +222,18 @@ export const viewed = async (req, res) => {
 
 	} catch (err) { console.log(err) }
 }
+
+export const ordered = async (req, res) => {
+
+	const { userId } = req
+
+	try {
+		const user = await UserModel.findOne({ _id: userId }) // todo ?
+		const ordered = await UserModel.findOneAndUpdate({ _id: userId }, { $push: { ordered: { time: Date(), prods: user.carted } }, $set: { carted: [] } })
+
+		// todo
+
+		res.json(ordered)
+
+	} catch (err) { console.log(err) }
+}

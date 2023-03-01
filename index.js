@@ -54,6 +54,7 @@ app.post("/auth/:token", UserController.auth)
 app.patch("/user/liked", auth, UserController.liked)
 app.patch("/user/carted", auth, UserController.carted)
 app.patch("/user/viewed", auth, UserController.viewed)
+app.patch("/user/ordered", auth, UserController.ordered)
 // ! prod
 app.post("/prod", ProdController.addProd)
 app.get("/prod", ProdController.getAllProd)
