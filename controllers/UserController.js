@@ -25,10 +25,10 @@ export const register = async (req, res) => {
 		const { password, ...userData } = user._doc // * trim password
 		const token = jwt.sign({ _id: user._id }, JWT)
 
-		res.json({ ...userData, token })
+		res.json({ ...userData, token, success: true })
 
 	} catch (err) {
-		myError(err, res)
+		res.status(501).json({ success: false, msg: "user already exists" })
 	}
 }
 
@@ -37,19 +37,19 @@ export const login = async (req, res) => {
 
 		const user = await UserModel.findOne({ email: req.body.email })
 		if (!user) {
-			myError(err, res)
+			return res.status(501).json({ success: false, msg: "email or password is incorrect" })
 		}
 
 		const pass = req.body.password
 		const isValidPass = await bcrypt.compare(pass, user._doc.password)
 		if (!isValidPass) {
-			myError(err, res)
+			return res.status(501).json({ success: false, msg: "email or password is incorrect" })
 		}
 
 		const { password, ...userData } = user._doc // * trim password
 		const token = jwt.sign({ _id: user._id }, JWT)
 
-		res.json({ ...userData, token })
+		res.json({ ...userData, token, success: true })
 
 	} catch (err) {
 		myError(err, res)
